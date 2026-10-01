@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ user.name }} – FitBuddy Plan</title>
+<link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+</head>
+<body class="soft-bg">
+<main class="container">
+<div class="topbar"><a class="back-link" href="/">← New Plan</a><span class="pill">{{ user.intensity|capitalize }} intensity</span></div>
+
+{% if updated %}
+<div class="success-banner">✅ Your plan has been updated based on your feedback.</div>
+{% endif %}
+
+<section class="card profile-card">
+<div><p class="eyebrow">PERSONALIZED PLAN</p><h1>{{ user.name }}'s FitBuddy Plan</h1>
+<p class="muted">A 7-day plan generated around your stated goal and intensity.</p></div>
+<div class="profile-grid">
+<div><span>User ID</span><strong>{{ user.user_id }}</strong></div>
+<div><span>Age</span><strong>{{ user.age }}</strong></div>
+<div><span>Weight</span><strong>{{ user.weight }} kg</strong></div>
+<div><span>Goal</span><strong>{{ user.goal|title }}</strong></div>
+</div>
+</section>
+
+<section class="card">
+<div class="section-heading"><span class="icon">🏆</span><div><p class="eyebrow">WORKOUT PLAN</p><h2>{{ workout_plan.title }}</h2></div></div>
+<p class="overview">{{ workout_plan.overview }}</p>
+
+<div class="days">
+{% for day in workout_plan.days %}
+<article class="day-card">
+<div class="day-header"><div><span class="day-label">{{ day.day }}</span><h3>{{ day.focus }}</h3></div></div>
+<div class="warmup"><strong>🔥 Warm-up</strong><p>{{ day.warm_up }}</p></div>
+<div class="exercise-list">
+{% for exercise in day.exercises %}
+<div class="exercise">
+<strong>{{ exercise.name }}</strong>
+<span>{{ exercise.sets }} sets</span>
+<span>{{ exercise.reps_or_duration }}</span>
+<span>Rest: {{ exercise.rest }}</span>
+</div>
+{% endfor %}
+</div>
+<div class="recovery-grid">
+<div><strong>❄️ Cool-down</strong><p>{{ day.cool_down }}</p></div>
+<div><strong>💡 Recovery</strong><p>{{ day.recovery_tip }}</p></div>
+</div>
+</article>
+{% endfor %}
+</div>
+
+<div class="notes"><h3>Important Notes</h3><ul>{% for note in workout_plan.important_notes %}<li>{{ note }}</li>{% endfor %}</ul></div>
+</section>
+
+<section class="card nutrition">
+<div class="section-heading"><span class="icon">🥗</span><div><p class="eyebrow">NUTRITION / RECOVERY</p><h2>FitBuddy Tip</h2></div></div>
+<p>{{ nutrition_tip }}</p>
+</section>
+
+<section class="card">
+<div class="section-heading"><span class="icon">📝</span><div><p class="eyebrow">FEEDBACK LOOP</p><h2>Refine Your Plan</h2></div></div>
+<p class="muted">Examples: “Add more cardio”, “Include more rest days”, or “Add yoga”.</p>
+<form action="/submit-feedback" method="post" class="form-grid">
+<input type="hidden" name="user_id" value="{{ user.user_id }}">
+<label>Your feedback<textarea name="feedback" rows="5" maxlength="2000" required placeholder="Tell us how you want to improve the plan..."></textarea></label>
+<button class="primary-btn" type="submit">🔄 Update Plan with AI</button>
+</form>
+</section>
+
+<footer><a href="/">Create another plan</a><span>•</span><a href="/view-all-users">Admin Dashboard</a><span>•</span><a href="/docs">API Docs</a></footer>
+</main>
+<script src="{{ url_for('static', path='js/app.js') }}"></script>
+</body>
+</html>

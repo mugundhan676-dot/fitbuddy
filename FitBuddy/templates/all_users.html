@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitBuddy – All Users</title>
+<link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+</head>
+<body class="soft-bg">
+<main class="container wide">
+<div class="topbar"><div><p class="eyebrow">ADMIN / COACH VIEW</p><h1>All Users & Workout Plans</h1></div><a class="back-link" href="/">← Home</a></div>
+{% if users %}
+<div class="table-wrap card">
+<table><thead><tr>
+<th>User ID</th><th>Name</th><th>Age</th><th>Weight</th><th>Goal</th><th>Intensity</th><th>Original Plan</th><th>Updated Plan</th>
+</tr></thead><tbody>
+{% for user in users %}
+<tr>
+<td>{{ user.user_id }}</td><td>{{ user.name }}</td><td>{{ user.age }}</td><td>{{ user.weight }} kg</td>
+<td>{{ user.goal }}</td><td>{{ user.intensity }}</td>
+<td><pre>{{ user.original_plan or "N/A" }}</pre></td>
+<td><pre>{{ user.updated_plan or "Not updated" }}</pre></td>
+</tr>
+{% endfor %}
+</tbody></table>
+</div>
+{% else %}
+<section class="card empty"><h2>No users yet</h2><p>Create a plan from the home page to populate the dashboard.</p></section>
+{% endif %}
+</main>
+<script src="{{ url_for('static', path='js/app.js') }}"></script>
+</body>
+</html>

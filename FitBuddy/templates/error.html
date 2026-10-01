@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitBuddy – Error</title>
+<link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+</head>
+<body class="soft-bg">
+<main class="container narrow">
+<section class="card error-card">
+<div class="brand-mark">⚠️</div>
+<p class="eyebrow">FITBUDDY ERROR</p>
+<h1>Something went wrong</h1>
+<p>{{ error }}</p>
+<a class="primary-btn link-btn" href="/">Return to FitBuddy</a>
+</section>
+</main>
+<script src="{{ url_for('static', path='js/app.js') }}"></script>
+</body>
+</html>
